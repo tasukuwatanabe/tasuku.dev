@@ -19,13 +19,10 @@ interface Props {
 const { post, posts } = Astro.props as Props;
 const { Content } = await render(post);
 
-// Sort posts by publication date
 const sortedPosts = posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-// Find current post index
 const currentIndex = sortedPosts.findIndex((p: CollectionEntry<'blog'>) => p.id === post.id);
 
-// Get previous and next posts
 const prevPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
 const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 ---

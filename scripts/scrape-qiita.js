@@ -31,13 +31,11 @@ async function getOGImageUrl(articleUrl) {
     const response = await axios.get(articleUrl);
     const $ = cheerio.load(response.data);
 
-    // Look for og:image meta tag
     const ogImage = $('meta[property="og:image"]').attr("content");
     if (ogImage) {
       return ogImage;
     }
 
-    // Fallback to twitter:image
     const twitterImage = $('meta[name="twitter:image"]').attr("content");
     if (twitterImage) {
       return twitterImage;

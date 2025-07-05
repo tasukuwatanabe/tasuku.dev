@@ -46,21 +46,17 @@ type ArticleItem =
 		isDummy: true;
 	};
 
-// Load Qiita articles
 let qiitaArticles: QiitaArticle[] = [];
 try {
 	const qiitaData = await import('../data/qiita-articles.json');
 	qiitaArticles = qiitaData.default || [];
-} catch (e) {
+} catch {
 	// ignore if not found
 }
 
-// Get blog posts
 const posts = await getCollection('blog');
 
-// Combine and sort all articles by publication date (newest first)
 let allArticles: ArticleItem[] = [
-	// Convert blog posts to unified format
 	...posts.map(post => ({
 		type: 'blog' as const,
 		title: post.data.title,
@@ -69,8 +65,6 @@ let allArticles: ArticleItem[] = [
 		url: `/blog/${post.id}/`,
 		post
 	})),
-	
-	// Convert Qiita articles to unified format
 	...qiitaArticles.map(article => ({
 		type: 'qiita' as const,
 		title: article.title,
@@ -81,73 +75,48 @@ let allArticles: ArticleItem[] = [
 	}))
 ].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
-// Insert dummy articles between consecutive days
 const articlesWithDummies: ArticleItem[] = [];
 for (let i = 0; i < allArticles.length; i++) {
 	articlesWithDummies.push(allArticles[i]);
 	
-	// Check if there's a next article and if they're on consecutive days
 	if (i < allArticles.length - 1) {
 		const currentDate = new Date(allArticles[i].pubDate);
 		const nextDate = new Date(allArticles[i + 1].pubDate);
 		
-		// Check if dates are consecutive (difference of 1 day)
 		const timeDiff = currentDate.getTime() - nextDate.getTime();
 		const daysDiff = timeDiff / (1000 * 3600 * 24);
 		
 		if (daysDiff === 1) {
-			// Insert dummy article between consecutive days with a realistic date
-			const dummyDate = new Date(nextDate.getTime() + (24 * 60 * 60 * 1000)); // Next day
+			const dummyDate = new Date(nextDate.getTime() + (24 * 60 * 60 * 1000));
 			
-			// Ensure the dummy date is within the specified range (2021-2024)
 			const minDate = new Date('2024-01-01');
 			const maxDate = new Date('2024-12-31');
 			
 			if (dummyDate >= minDate && dummyDate <= maxDate) {
-				// Generate varied dummy article content
-				const dummyTitles = [
-					'Web Development Best Practices in 2024',
-					'Modern JavaScript Frameworks Comparison',
-					'CSS Grid vs Flexbox: When to Use Each',
-					'Performance Optimization Techniques',
-					'Responsive Design Principles',
-					'TypeScript Tips and Tricks',
-					'React Hooks Deep Dive',
-					'Vue.js 3 Composition API Guide',
-					'Node.js Backend Development',
-					'Database Design Patterns',
-					'API Design Best Practices',
-					'Testing Strategies for Web Applications',
-					'Deployment and CI/CD Pipeline',
-					'Security Best Practices for Web Apps',
-					'Accessibility Guidelines and Implementation'
+				const dummyContent = [
+					{ title: 'Web Development Best Practices in 2024', description: 'Exploring the latest trends and best practices in modern web development.' },
+					{ title: 'Modern JavaScript Frameworks Comparison', description: 'A comprehensive guide to choosing the right framework for your project.' },
+					{ title: 'CSS Grid vs Flexbox: When to Use Each', description: 'Understanding when and how to use CSS Grid and Flexbox effectively.' },
+					{ title: 'Performance Optimization Techniques', description: 'Techniques to improve your application performance and user experience.' },
+					{ title: 'Responsive Design Principles', description: 'Creating websites that work seamlessly across all devices and screen sizes.' },
+					{ title: 'TypeScript Tips and Tricks', description: 'Advanced TypeScript features and how to leverage them in your projects.' },
+					{ title: 'React Hooks Deep Dive', description: 'Deep dive into React Hooks and their practical applications.' },
+					{ title: 'Vue.js 3 Composition API Guide', description: 'Mastering the Composition API in Vue.js 3 for better code organization.' },
+					{ title: 'Node.js Backend Development', description: 'Building scalable backend services with Node.js and Express.' },
+					{ title: 'Database Design Patterns', description: 'Common database design patterns and when to apply them.' },
+					{ title: 'API Design Best Practices', description: 'Designing RESTful APIs that are intuitive and maintainable.' },
+					{ title: 'Testing Strategies for Web Applications', description: 'Comprehensive testing strategies for modern web applications.' },
+					{ title: 'Deployment and CI/CD Pipeline', description: 'Setting up efficient deployment pipelines and continuous integration.' },
+					{ title: 'Security Best Practices for Web Apps', description: 'Essential security practices to protect your web applications.' },
+					{ title: 'Accessibility Guidelines and Implementation', description: 'Making your web applications accessible to all users.' }
 				];
 				
-				const dummyDescriptions = [
-					'Exploring the latest trends and best practices in modern web development.',
-					'A comprehensive guide to choosing the right framework for your project.',
-					'Understanding when and how to use CSS Grid and Flexbox effectively.',
-					'Techniques to improve your application performance and user experience.',
-					'Creating websites that work seamlessly across all devices and screen sizes.',
-					'Advanced TypeScript features and how to leverage them in your projects.',
-					'Deep dive into React Hooks and their practical applications.',
-					'Mastering the Composition API in Vue.js 3 for better code organization.',
-					'Building scalable backend services with Node.js and Express.',
-					'Common database design patterns and when to apply them.',
-					'Designing RESTful APIs that are intuitive and maintainable.',
-					'Comprehensive testing strategies for modern web applications.',
-					'Setting up efficient deployment pipelines and continuous integration.',
-					'Essential security practices to protect your web applications.',
-					'Making your web applications accessible to all users.'
-				];
-				
-				// Select random title and description
-				const randomIndex = Math.floor(Math.random() * dummyTitles.length);
+				const randomIndex = Math.floor(Math.random() * dummyContent.length);
 				
 				articlesWithDummies.push({
 					type: 'dummy' as const,
-					title: dummyTitles[randomIndex],
-					description: dummyDescriptions[randomIndex],
+					title: dummyContent[randomIndex].title,
+					description: dummyContent[randomIndex].description,
 					pubDate: dummyDate,
 					url: '#',
 					isDummy: true
@@ -157,7 +126,7 @@ for (let i = 0; i < allArticles.length; i++) {
 	}
 }
 
-allArticles = articlesWithDummies.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+const finalArticles = articlesWithDummies.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 ---
 
 <!doctype html>
@@ -170,8 +139,8 @@ allArticles = articlesWithDummies.sort((a, b) => b.pubDate.getTime() - a.pubDate
 		<main class="max-w-4xl mx-auto px-4 flex-grow">
 			<section>
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{allArticles.map((item) => (
-						<article class={`rounded-lg shadow-md overflow-hidden transition-shadow duration-200 ${item.type === 'dummy' ? 'bg-gray-100 border-2 border-dashed border-gray-300' : 'bg-white hover:shadow-lg'}`}>
+					{finalArticles.map((item) => (
+						<article class={`rounded-lg shadow-sm overflow-hidden transition-shadow duration-200 ${item.type === 'dummy' ? 'bg-gray-100 border-2 border-dashed border-gray-300' : 'bg-white hover:shadow-md'}`}>
 							{item.type === 'dummy' ? (
 								<div class="block no-underline">
 									<div class="aspect-[16/9] bg-gray-200 flex items-center justify-center">
@@ -235,12 +204,6 @@ allArticles = articlesWithDummies.sort((a, b) => b.pubDate.getTime() - a.pubDate
 </html>
 
 <style>
-	.line-clamp-2 {
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
 	.line-clamp-3 {
 		display: -webkit-box;
 		-webkit-line-clamp: 3;
