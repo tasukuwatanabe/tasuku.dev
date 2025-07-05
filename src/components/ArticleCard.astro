@@ -1,0 +1,59 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import GradientThumbnail from './GradientThumbnail.astro';
+
+interface Props {
+	title: string;
+	url: string;
+	date: Date | string;
+	thumbnail?: string | null;
+	external?: boolean;
+}
+
+const { title, url, date, thumbnail, external = false } = Astro.props;
+
+// Convert string date to Date object if needed
+const dateObj = typeof date === 'string' ? new Date(date) : date;
+---
+
+<article class="rounded-lg shadow-sm overflow-hidden transition-shadow duration-200 bg-white hover:shadow-md">
+	<a
+		href={url}
+		target={external ? "_blank" : undefined}
+		rel={external ? "noopener noreferrer" : undefined}
+		class="block no-underline"
+	>
+		<div class="aspect-[16/9] bg-gray-100 flex items-center justify-center">
+			{thumbnail ? (
+				<img
+					src={thumbnail}
+					alt={title}
+					class="w-full h-full object-cover"
+					style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; image-rendering: pixelated; backface-visibility: hidden; transform: translateZ(0); border-radius: 0.5rem 0.5rem 0 0;"
+				/>
+			) : (
+				<div class="w-full h-full">
+					<GradientThumbnail
+						title={title}
+						class="w-full h-full"
+					/>
+				</div>
+			)}
+		</div>
+		<div class="p-4">
+			<h4 class="title m-0 text-gray-800 leading-relaxed text-base line-clamp-3 mb-2">{title}</h4>
+			<div class="text-xs text-gray-600">
+				<FormattedDate date={dateObj} />
+			</div>
+		</div>
+	</a>
+</article>
+
+<style>
+	.line-clamp-3 {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+</style> 

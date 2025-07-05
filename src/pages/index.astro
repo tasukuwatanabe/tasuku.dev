@@ -4,8 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
-import GradientThumbnail from '../components/GradientThumbnail.astro';
+import ArticleCard from '../components/ArticleCard.astro';
 
 interface QiitaArticle {
 	title: string;
@@ -20,112 +19,30 @@ interface QiitaArticle {
 	body: string;
 }
 
-type ArticleItem =
-	| {
-		type: 'blog';
-		title: string;
-		description: string;
-		pubDate: Date;
-		url: string;
-		post: any;
-	}
-	| {
-		type: 'qiita';
-		title: string;
-		description: string;
-		pubDate: Date;
-		url: string;
-		article: any;
-	}
-	| {
-		type: 'dummy';
-		title: string;
-		description: string;
-		pubDate: Date;
-		url: string;
-		isDummy: true;
-	};
-
-let qiitaArticles: QiitaArticle[] = [];
-try {
-	const qiitaData = await import('../data/qiita-articles.json');
-	qiitaArticles = qiitaData.default || [];
-} catch {
-	// ignore if not found
-}
+type ArticleItem = {
+	type: 'blog';
+	title: string;
+	description: string;
+	pubDate: Date;
+	url: string;
+	post: any;
+};
 
 const posts = await getCollection('blog');
 
-let allArticles: ArticleItem[] = [
-	...posts.map(post => ({
-		type: 'blog' as const,
-		title: post.data.title,
-		description: post.data.description,
-		pubDate: post.data.pubDate,
-		url: `/blog/${post.id}/`,
-		post
-	})),
-	...qiitaArticles.map(article => ({
-		type: 'qiita' as const,
-		title: article.title,
-		description: article.body?.replace(/<[^>]+>/g, '').slice(0, 120) + (article.body?.length > 120 ? '…' : ''),
-		pubDate: new Date(article.created_at),
-		url: article.url,
-		article
-	}))
-].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+// Combine all blog posts into one section
+const allBlogItems: ArticleItem[] = posts.map(post => ({
+	type: 'blog' as const,
+	title: post.data.title,
+	description: post.data.description,
+	pubDate: post.data.pubDate,
+	url: `/blog/${post.id}/`,
+	post
+})).sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
-const articlesWithDummies: ArticleItem[] = [];
-for (let i = 0; i < allArticles.length; i++) {
-	articlesWithDummies.push(allArticles[i]);
-	
-	if (i < allArticles.length - 1) {
-		const currentDate = new Date(allArticles[i].pubDate);
-		const nextDate = new Date(allArticles[i + 1].pubDate);
-		
-		const timeDiff = currentDate.getTime() - nextDate.getTime();
-		const daysDiff = timeDiff / (1000 * 3600 * 24);
-		
-		if (daysDiff === 1) {
-			const dummyDate = new Date(nextDate.getTime() + (24 * 60 * 60 * 1000));
-			
-			const minDate = new Date('2024-01-01');
-			const maxDate = new Date('2024-12-31');
-			
-			if (dummyDate >= minDate && dummyDate <= maxDate) {
-				const dummyContent = [
-					{ title: 'Web Development Best Practices in 2024', description: 'Exploring the latest trends and best practices in modern web development.' },
-					{ title: 'Modern JavaScript Frameworks Comparison', description: 'A comprehensive guide to choosing the right framework for your project.' },
-					{ title: 'CSS Grid vs Flexbox: When to Use Each', description: 'Understanding when and how to use CSS Grid and Flexbox effectively.' },
-					{ title: 'Performance Optimization Techniques', description: 'Techniques to improve your application performance and user experience.' },
-					{ title: 'Responsive Design Principles', description: 'Creating websites that work seamlessly across all devices and screen sizes.' },
-					{ title: 'TypeScript Tips and Tricks', description: 'Advanced TypeScript features and how to leverage them in your projects.' },
-					{ title: 'React Hooks Deep Dive', description: 'Deep dive into React Hooks and their practical applications.' },
-					{ title: 'Vue.js 3 Composition API Guide', description: 'Mastering the Composition API in Vue.js 3 for better code organization.' },
-					{ title: 'Node.js Backend Development', description: 'Building scalable backend services with Node.js and Express.' },
-					{ title: 'Database Design Patterns', description: 'Common database design patterns and when to apply them.' },
-					{ title: 'API Design Best Practices', description: 'Designing RESTful APIs that are intuitive and maintainable.' },
-					{ title: 'Testing Strategies for Web Applications', description: 'Comprehensive testing strategies for modern web applications.' },
-					{ title: 'Deployment and CI/CD Pipeline', description: 'Setting up efficient deployment pipelines and continuous integration.' },
-					{ title: 'Security Best Practices for Web Apps', description: 'Essential security practices to protect your web applications.' },
-					{ title: 'Accessibility Guidelines and Implementation', description: 'Making your web applications accessible to all users.' }
-				];
-
-				const randomIndex = Math.floor(Math.random() * dummyContent.length);
-				articlesWithDummies.push({
-					type: 'dummy' as const,
-					title: dummyContent[randomIndex].title,
-					description: dummyContent[randomIndex].description,
-					pubDate: dummyDate,
-					url: '#',
-					isDummy: true
-				});
-			}
-		}
-	}
-}
-
-const finalArticles = articlesWithDummies.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+// Import Qiita articles from the JSON file
+import qiitaArticlesData from '../data/qiita-articles.json';
+const qiitaArticles: QiitaArticle[] = qiitaArticlesData;
 ---
 
 <!doctype html>
@@ -135,65 +52,33 @@ const finalArticles = articlesWithDummies.sort((a, b) => b.pubDate.getTime() - a
 	</head>
 	<body class="min-h-screen flex flex-col">
 		<Header />
-		<main class="max-w-4xl mx-auto px-4 flex-grow">
-			<section>
+		<main class="max-w-6xl mx-auto px-4 flex-grow">
+			<!-- Blog Section -->
+			<section class="mb-16">
+				<h2 class="text-2xl font-bold mb-8 text-gray-800 border-b border-gray-200 pb-4">Blog</h2>
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{finalArticles.map((item) => (
-						<article class={`rounded-lg shadow-sm overflow-hidden transition-shadow duration-200 ${item.type === 'dummy' ? 'bg-gray-100 border-2 border-dashed border-gray-300' : 'bg-white hover:shadow-md'}`}>
-							{item.type === 'dummy' ? (
-								<div class="block no-underline">
-									<div class="aspect-[16/9] bg-gray-200 flex items-center justify-center">
-										<div class="text-center">
-											<span class="text-gray-500 text-lg">📝</span>
-											<p class="text-gray-500 text-sm mt-2">Dummy Article</p>
-										</div>
-									</div>
-									<div class="p-4 flex flex-col min-h-24 justify-between">
-										<h4 class="title m-0 text-gray-600 leading-relaxed text-base line-clamp-3 mb-2 italic">{item.title}</h4>
-										<p class="text-xs text-gray-500 mb-2">{item.description}</p>
-										<div class="text-xs text-gray-500">
-											<FormattedDate date={item.pubDate} />
-										</div>
-									</div>
-								</div>
-							) : (
-								<a
-									href={item.url}
-									target={item.type === 'qiita' ? '_blank' : undefined}
-									rel={item.type === 'qiita' ? 'noopener noreferrer' : undefined}
-									class="block no-underline"
-								>
-									<div class="aspect-[16/9] bg-gray-100 flex items-center justify-center">
-										{item.type === 'qiita' && item.article.ogImage ? (
-											<img
-												src={item.article.ogImage}
-												alt={item.title}
-												class="w-full h-full object-cover"
-												style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; image-rendering: pixelated; backface-visibility: hidden; transform: translateZ(0); border-radius: 0;"
-												loading="lazy"
-											/>
-										) : item.type === 'qiita' ? (
-											<div class="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-												<span class="text-gray-500 text-sm">No Image</span>
-											</div>
-										) : (
-											<div class="w-full h-full">
-												<GradientThumbnail
-													title={item.title}
-													class="w-full h-full"
-												/>
-											</div>
-										)}
-									</div>
-									<div class="p-4 flex flex-col min-h-24 justify-between">
-										<h4 class="title m-0 text-gray-800 leading-relaxed text-base line-clamp-3 mb-2">{item.title}</h4>
-										<div class="text-xs text-gray-600">
-											<FormattedDate date={item.pubDate} />
-										</div>
-									</div>
-								</a>
-							)}
-						</article>
+					{allBlogItems.map((item) => (
+						<ArticleCard
+							title={item.title}
+							url={item.url}
+							date={item.pubDate}
+						/>
+					))}
+				</div>
+			</section>
+
+			<!-- Qiita Section -->
+			<section class="mb-16">
+				<h2 class="text-2xl font-bold mb-8 text-gray-800 border-b border-gray-200 pb-4">Qiita</h2>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					{qiitaArticles.map((article) => (
+						<ArticleCard
+							title={article.title}
+							url={article.url}
+							date={article.created_at}
+							thumbnail={article.ogImage}
+							external={true}
+						/>
 					))}
 				</div>
 			</section>
@@ -202,11 +87,4 @@ const finalArticles = articlesWithDummies.sort((a, b) => b.pubDate.getTime() - a
 	</body>
 </html>
 
-<style>
-	.line-clamp-3 {
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-</style>
+
