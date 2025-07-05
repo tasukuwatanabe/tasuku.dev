@@ -1,7 +1,7 @@
 ---
 title: "Vue.js 3とComposition APIで作るモダンWebアプリ"
 description: "Vue.js 3の新機能Composition APIを使った効率的なWebアプリケーション開発手法"
-pubDate: "2024-06-19"
+pubDate: "2024-11-12"
 ---
 
 Vue.js 3 は、パフォーマンスの向上と開発体験の改善を目的とした大幅なアップデートです。特に Composition API の導入により、より柔軟で再利用可能なコンポーネント開発が可能になりました。
