@@ -5,8 +5,7 @@
 @layer base {
   body {
     @apply font-japanese text-xl leading-relaxed text-gray-dark break-words;
-    background: linear-gradient(rgba(229, 233, 240, 0.5), #fff) no-repeat;
-    background-size: 100% 600px;
+    background: #f5f7fa;
   }
 
   main {
