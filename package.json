@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "scrape-qiita": "node scripts/scrape-qiita.js"
+    "scrape-qiita": "node scripts/scrape-qiita.ts"
   },
   "dependencies": {
     "astro": "^5.11.0"
