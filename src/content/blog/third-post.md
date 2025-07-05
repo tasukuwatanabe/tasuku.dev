@@ -1,16 +1,147 @@
 ---
-title: 'Third post'
-description: 'Lorem ipsum dolor sit amet'
-pubDate: 'Jul 22 2022'
+title: 'CSS GridとFlexboxを使ったレスポンシブレイアウト実装'
+description: 'モダンなCSSレイアウト手法で美しいレスポンシブデザインを実現する'
+pubDate: '2022/07/22'
 heroImage: '../../assets/blog-placeholder-2.jpg'
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+モダンなWeb開発において、レスポンシブデザインは必須のスキルです。CSS GridとFlexboxを組み合わせることで、柔軟で保守性の高いレイアウトを実現できます。
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+## CSS Gridの基本
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+CSS Gridは2次元レイアウトシステムで、複雑なレイアウトを簡単に実現できます。
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+.grid-item {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+}
+```
+
+### 主要なプロパティ
+
+- `grid-template-columns`: 列のサイズを定義
+- `grid-template-rows`: 行のサイズを定義
+- `gap`: グリッドアイテム間の間隔
+- `grid-area`: アイテムの配置を指定
+
+## Flexboxでのコンポーネント設計
+
+Flexboxは1次元レイアウトに特化しており、コンポーネント内の要素配置に適しています。
+
+```css
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.flex-item {
+  flex: 1;
+  margin: 0 8px;
+}
+
+.flex-item:first-child {
+  flex: 0 0 auto; /* 固定幅 */
+}
+```
+
+### 実用的なFlexboxパターン
+
+```css
+/* 中央揃え */
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* カードレイアウト */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-footer {
+  margin-top: auto;
+}
+```
+
+## レスポンシブデザインの実装
+
+### モバイルファーストアプローチ
+
+```css
+/* スマートフォン用ベーススタイル */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* タブレット以上 */
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    padding: 24px;
+  }
+}
+
+/* デスクトップ */
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+```
+
+### Container Queriesの活用
+
+最新のブラウザでは、Container Queriesを使ってより柔軟なレイアウトが可能です：
+
+```css
+.card-container {
+  container-type: inline-size;
+}
+
+@container (min-width: 250px) {
+  .card {
+    display: flex;
+    align-items: center;
+  }
+  
+  .card-image {
+    flex: 0 0 100px;
+  }
+}
+```
+
+## パフォーマンスの最適化
+
+レイアウトのパフォーマンスを向上させるためのポイント：
+
+1. **`will-change`プロパティの使用**
+2. **不要なリフローの回避**
+3. **CSSの含有ブロックの理解**
+
+## まとめ
+
+CSS GridとFlexboxを組み合わせることで、保守性が高く柔軟なレイアウトを実現できます。各手法の特性を理解し、適切な場面で使い分けることが重要です。
