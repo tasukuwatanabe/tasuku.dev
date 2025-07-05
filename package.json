@@ -10,6 +10,8 @@
     "scrape-qiita": "node scripts/scrape-qiita.ts"
   },
   "dependencies": {
+    "@fontsource/noto-sans-jp": "^5.2.6",
+    "@fontsource/noto-sans-mono": "^5.2.7",
     "astro": "^5.11.0"
   },
   "devDependencies": {
