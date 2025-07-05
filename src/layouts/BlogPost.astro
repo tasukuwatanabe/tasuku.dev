@@ -46,7 +46,6 @@ const { title, description, pubDate, updatedDate, prevPost, nextPost } = Astro.p
 					<div class="article-body leading-relaxed">
 						<slot />
 					</div>
-					
 					{(prevPost || nextPost) && (
 						<div class="article-navigation mt-12 pt-8 border-t border-gray-light">
 							<div class="flex gap-4">

@@ -20,7 +20,7 @@ interface QiitaArticle {
 	body: string;
 }
 
-type ArticleItem = 
+type ArticleItem =
 	| {
 		type: 'blog';
 		title: string;
@@ -110,9 +110,8 @@ for (let i = 0; i < allArticles.length; i++) {
 					{ title: 'Security Best Practices for Web Apps', description: 'Essential security practices to protect your web applications.' },
 					{ title: 'Accessibility Guidelines and Implementation', description: 'Making your web applications accessible to all users.' }
 				];
-				
+
 				const randomIndex = Math.floor(Math.random() * dummyContent.length);
-				
 				articlesWithDummies.push({
 					type: 'dummy' as const,
 					title: dummyContent[randomIndex].title,
@@ -158,16 +157,16 @@ const finalArticles = articlesWithDummies.sort((a, b) => b.pubDate.getTime() - a
 									</div>
 								</div>
 							) : (
-								<a 
-									href={item.url} 
+								<a
+									href={item.url}
 									target={item.type === 'qiita' ? '_blank' : undefined}
 									rel={item.type === 'qiita' ? 'noopener noreferrer' : undefined}
 									class="block no-underline"
 								>
 									<div class="aspect-[16/9] bg-gray-100 flex items-center justify-center">
 										{item.type === 'qiita' && item.article.ogImage ? (
-											<img 
-												src={item.article.ogImage} 
+											<img
+												src={item.article.ogImage}
 												alt={item.title}
 												class="w-full h-full object-cover"
 												style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; image-rendering: pixelated; backface-visibility: hidden; transform: translateZ(0); border-radius: 0;"
@@ -179,8 +178,8 @@ const finalArticles = articlesWithDummies.sort((a, b) => b.pubDate.getTime() - a
 											</div>
 										) : (
 											<div class="w-full h-full">
-												<GradientThumbnail 
-													title={item.title} 
+												<GradientThumbnail
+													title={item.title}
 													class="w-full h-full"
 												/>
 											</div>
