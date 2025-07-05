@@ -3,45 +3,16 @@ import fs from "fs/promises";
 import path from "path";
 import * as cheerio from "cheerio";
 
-interface QiitaArticle {
-	id: string;
-	title: string;
-	url: string;
-	created_at: string;
-	updated_at: string;
-	user: {
-		id: string;
-		profile_image_url: string;
-	};
-	tags: Array<{ name: string }>;
-	likes_count: number;
-	body: string;
-}
-
-interface ProcessedArticle {
-	id: string;
-	title: string;
-	url: string;
-	created_at: string;
-	updated_at: string;
-	user_id: string;
-	user_icon: string;
-	tags: string[];
-	likes_count: number;
-	ogImage: string | null;
-	body: string;
-}
-
 const QIITA_USER_ID = "tasukuwatanabe";
 const QIITA_API_KEY = process.env.QIITA_API_KEY || "";
 const QIITA_API_URL = `https://qiita.com/api/v2/users/${QIITA_USER_ID}/items`;
 
-async function fetchQiitaArticles(): Promise<QiitaArticle[]> {
+async function fetchQiitaArticles() {
   try {
     const headers = QIITA_API_KEY
       ? { Authorization: `Bearer ${QIITA_API_KEY}` }
       : {};
-    const response = await axios.get<QiitaArticle[]>(QIITA_API_URL, {
+    const response = await axios.get(QIITA_API_URL, {
       headers,
       params: {
         per_page: 100,
@@ -50,12 +21,15 @@ async function fetchQiitaArticles(): Promise<QiitaArticle[]> {
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching Qiita articles:", error instanceof Error ? error.message : error);
+    console.error(
+      "Error fetching Qiita articles:",
+      error instanceof Error ? error.message : error
+    );
     return [];
   }
 }
 
-async function getOGImageUrl(articleUrl: string): Promise<string | null> {
+async function getOGImageUrl(articleUrl) {
   try {
     const response = await axios.get(articleUrl);
     const $ = cheerio.load(response.data);
@@ -72,15 +46,18 @@ async function getOGImageUrl(articleUrl: string): Promise<string | null> {
 
     return null;
   } catch (error) {
-    console.error(`Error fetching OG image for ${articleUrl}:`, error instanceof Error ? error.message : error);
+    console.error(
+      `Error fetching OG image for ${articleUrl}:`,
+      error instanceof Error ? error.message : error
+    );
     return null;
   }
 }
 
-async function main(): Promise<void> {
+async function main() {
   const articles = await fetchQiitaArticles();
 
-  const mapped: ProcessedArticle[] = [];
+  const mapped = [];
   for (const item of articles) {
     const ogImageUrl = await getOGImageUrl(item.url);
 

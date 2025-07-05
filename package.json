@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "scrape-qiita": "node scripts/scrape-qiita.ts"
+    "scrape-qiita": "node scripts/scrape-qiita"
   },
   "dependencies": {
     "@fontsource/noto-sans-jp": "^5.2.6",
