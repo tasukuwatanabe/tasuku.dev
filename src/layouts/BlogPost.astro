@@ -5,15 +5,16 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
-type Props = CollectionEntry<'blog'>['data'] | {
+interface Props {
 	title: string;
 	description: string;
 	pubDate?: Date;
 	updatedDate?: Date;
-	heroImage?: any;
-};
+	prevPost?: CollectionEntry<'blog'> | null;
+	nextPost?: CollectionEntry<'blog'> | null;
+}
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, prevPost, nextPost } = Astro.props;
 ---
 
 <html lang="en" class="h-full">
@@ -42,9 +43,32 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 						<h1 class="mb-6 text-3xl font-bold">{title}</h1>
 						<hr />
 					</div>
-					<div class="prose-content text-base">
+					<div class="article-body leading-relaxed">
 						<slot />
 					</div>
+					
+					{(prevPost || nextPost) && (
+						<div class="article-navigation mt-12 pt-8 border-t border-gray-light">
+							<div class="flex gap-4">
+								{prevPost ? (
+									<a href={`/blog/${prevPost.id}/`} class="w-1/2 p-4 border border-gray-light rounded-lg hover:border-gray-400 transition-colors">
+										<div class="text-sm text-gray-600 mb-1">← 前の記事</div>
+										<div class="font-medium text-black truncate text-sm">{prevPost.data.title}</div>
+									</a>
+								) : (
+									<div class="w-1/2"></div>
+								)}
+								{nextPost ? (
+									<a href={`/blog/${nextPost.id}/`} class="w-1/2 p-4 border border-gray-light rounded-lg hover:border-gray-400 transition-colors text-right">
+										<div class="text-sm text-gray-600 mb-1">次の記事 →</div>
+										<div class="font-medium text-black truncate text-sm">{nextPost.data.title}</div>
+									</a>
+								) : (
+									<div class="w-1/2"></div>
+								)}
+							</div>
+						</div>
+					)}
 				</div>
 			</article>
 		</main>

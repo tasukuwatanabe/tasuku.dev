@@ -1,19 +1,18 @@
 ---
-title: 'React 18の新機能と実装のポイント'
-description: 'React 18で追加された新機能について詳しく解説します'
-pubDate: '2022/07/08'
-heroImage: '../../assets/blog-placeholder-3.jpg'
+title: "React 18の新機能と実装のポイント"
+description: "React 18で追加された新機能について詳しく解説します"
+pubDate: "2022-07-08"
 ---
 
-React 18がリリースされ、多くの新機能と改善が追加されました。この記事では、特に注目すべき新機能について詳しく解説していきます。
+React 18 がリリースされ、多くの新機能と改善が追加されました。この記事では、特に注目すべき新機能について詳しく解説していきます。
 
 ## Concurrent Features
 
-React 18の最大の特徴は、Concurrent Featuresの導入です。これにより、ユーザーインターフェースの応答性が大幅に向上しました。
+React 18 の最大の特徴は、Concurrent Features の導入です。これにより、ユーザーインターフェースの応答性が大幅に向上しました。
 
 ### Automatic Batching
 
-以前のReactでは、イベントハンドラー内でのstate更新のみがバッチ処理されていました。React 18では、Promise、setTimeout、ネイティブイベントハンドラー内での更新も自動的にバッチ処理されます。
+以前の React では、イベントハンドラー内での state 更新のみがバッチ処理されていました。React 18 では、Promise、setTimeout、ネイティブイベントハンドラー内での更新も自動的にバッチ処理されます。
 
 ```javascript
 function App() {
@@ -22,8 +21,8 @@ function App() {
 
   function handleClick() {
     // React 18では自動的にバッチ処理される
-    setCount(c => c + 1);
-    setFlag(f => !f);
+    setCount((c) => c + 1);
+    setFlag((f) => !f);
   }
 
   return (
@@ -37,13 +36,13 @@ function App() {
 
 ### Suspense の改善
 
-Server-side renderingでのSuspenseサポートが追加され、コンポーネントの遅延読み込みがより効率的になりました。
+Server-side rendering での Suspense サポートが追加され、コンポーネントの遅延読み込みがより効率的になりました。
 
-## 新しいHooks
+## 新しい Hooks
 
 ### useId
 
-`useId`は、アクセシビリティ属性のためのユニークIDを生成するHookです。サーバーサイドレンダリングとクライアントサイドで一貫したIDを生成できます。
+`useId`は、アクセシビリティ属性のためのユニーク ID を生成する Hook です。サーバーサイドレンダリングとクライアントサイドで一貫した ID を生成できます。
 
 ```javascript
 function Checkbox() {
@@ -51,7 +50,7 @@ function Checkbox() {
   return (
     <>
       <label htmlFor={id}>Do you like React?</label>
-      <input id={id} type="checkbox" name="react"/>
+      <input id={id} type="checkbox" name="react" />
     </>
   );
 }
@@ -65,10 +64,10 @@ function Checkbox() {
 function App() {
   const [text, setText] = useState("");
   const deferredText = useDeferredValue(text);
-  
+
   return (
     <div>
-      <input value={text} onChange={e => setText(e.target.value)} />
+      <input value={text} onChange={(e) => setText(e.target.value)} />
       <SlowList text={deferredText} />
     </div>
   );
@@ -77,4 +76,4 @@ function App() {
 
 ## まとめ
 
-React 18は、パフォーマンスの向上とDeveloper Experienceの改善に重点を置いたメジャーアップデートです。段階的に移行していくことで、既存のアプリケーションも恩恵を受けることができます。
+React 18 は、パフォーマンスの向上と Developer Experience の改善に重点を置いたメジャーアップデートです。段階的に移行していくことで、既存のアプリケーションも恩恵を受けることができます。

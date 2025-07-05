@@ -2,79 +2,113 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-	body {
-		@apply font-japanese text-xl leading-relaxed text-gray-dark break-words;
-		background: linear-gradient(rgba(229, 233, 240, 0.5), #fff) no-repeat;
-		background-size: 100% 600px;
-	}
+  body {
+    @apply font-japanese text-xl leading-relaxed text-gray-dark break-words;
+    background: linear-gradient(rgba(229, 233, 240, 0.5), #fff) no-repeat;
+    background-size: 100% 600px;
+  }
 
-	.prose-content {
-		@apply text-base leading-relaxed;
-	}
+  main {
+    @apply max-w-main mx-auto px-4 py-12;
+    max-width: calc(100% - 2em);
+  }
 
-	main {
-		@apply max-w-main mx-auto px-4 py-12;
-		max-width: calc(100% - 2em);
-	}
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply mb-2 text-black leading-tight;
+  }
 
-	h1, h2, h3, h4, h5, h6 {
-		@apply mb-2 text-black leading-tight;
-	}
+  a {
+    @apply text-accent hover:text-accent;
+  }
 
-	a {
-		@apply text-accent hover:text-accent;
-	}
+  p {
+    @apply mb-4;
+  }
 
-	p {
-		@apply mb-4;
-	}
+  textarea {
+    @apply w-full text-base;
+  }
 
+  input {
+    @apply text-base;
+  }
 
-	textarea {
-		@apply w-full text-base;
-	}
+  table {
+    @apply w-full;
+  }
 
-	input {
-		@apply text-base;
-	}
+  img {
+    @apply max-w-full h-auto rounded-lg;
+  }
 
-	table {
-		@apply w-full;
-	}
+  code {
+    @apply px-1 py-0.5 bg-gray-light rounded font-mono;
+  }
 
-	img {
-		@apply max-w-full h-auto rounded-lg;
-	}
+  pre {
+    @apply p-6 rounded-lg font-mono;
+  }
 
-	code {
-		@apply px-1 py-0.5 bg-gray-light rounded font-mono;
-	}
+  pre > code {
+    all: unset;
+  }
 
-	pre {
-		@apply p-6 rounded-lg font-mono;
-	}
+  blockquote {
+    @apply border-l-4 border-accent pl-5 m-0 text-xl;
+  }
 
-	pre > code {
-		all: unset;
-	}
+  hr {
+    @apply border-0 border-t border-gray-light;
+  }
 
-	blockquote {
-		@apply border-l-4 border-accent pl-5 m-0 text-xl;
-	}
+  @media (max-width: 720px) {
+    body {
+      @apply text-lg;
+    }
 
-	hr {
-		@apply border-0 border-t border-gray-light;
-	}
+    main {
+      @apply p-4;
+    }
+  }
 
-	@media (max-width: 720px) {
-		body {
-			@apply text-lg;
-		}
-
-		main {
-			@apply p-4;
-		}
-	}
+  .article-body {
+    font-size: 16px;
+  }
+  .article-body h1 {
+    font-size: 2.25rem; /* 36px */
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
+  }
+  .article-body h2 {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+  .article-body h3 {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .article-body h4 {
+    font-size: 1.125rem; /* 18px */
+    font-weight: 600;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.35;
+  }
+  .article-body pre + pre {
+    margin-top: 2rem;
+  }
 }

@@ -1,0 +1,44 @@
+---
+interface Props {
+	title: string;
+	class?: string;
+}
+
+const { title, class: className } = Astro.props;
+
+// Generate a consistent, stable hash based on the title
+// This ensures the same article always gets the same gradient and icon
+const titleHash = title
+	.toLowerCase()
+	.trim()
+	.split('')
+	.reduce((hash, char) => {
+		const code = char.charCodeAt(0);
+		return ((hash << 5) - hash + code) >>> 0; // Ensure positive 32-bit integer
+	}, 0);
+
+// Create distinct but smooth gradient colors based on stable title hash
+const baseHue = titleHash % 360;
+const hue1 = baseHue;
+const hue2 = (baseHue + 25) % 360; // Moderate hue difference for distinct colors
+const saturation = 40 + (titleHash % 25); // Higher saturation for distinct colors
+const lightness1 = 70 + (titleHash % 20); // Moderate lightness
+const lightness2 = lightness1 - 12; // Moderate lightness difference
+
+// Icons array - using emoji for simplicity
+// Each article will consistently get the same icon based on its title
+const icons = ['📝', '💻', '🎨', '🚀', '⚡', '🔧', '📚', '🎯', '💡', '🌟', '🎪', '🎭', '🎨', '🔮', '🎪', '🎯', '💎', '🌙', '⭐', '🎪'];
+
+// Select icon based on stable title hash
+const iconIndex = titleHash % icons.length;
+const selectedIcon = icons[iconIndex];
+
+const gradientStyle = `background: linear-gradient(45deg, hsl(${hue1}, ${saturation}%, ${lightness1}%) 0%, hsl(${hue2}, ${saturation}%, ${lightness2}%) 100%)`;
+---
+
+<div 
+	class:list={['gradient-thumbnail', 'flex items-center justify-center rounded-lg', className]} 
+	style={gradientStyle}
+>
+	<span class="text-xl text-white drop-shadow-md">{selectedIcon}</span>
+</div> 
