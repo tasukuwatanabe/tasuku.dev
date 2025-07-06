@@ -48,7 +48,15 @@
   }
 
   table {
-    @apply w-full;
+    @apply w-full border-collapse border border-gray-light my-6;
+  }
+
+  th {
+    @apply border border-gray-light px-4 py-2 bg-gray-100 font-semibold text-left;
+  }
+
+  td {
+    @apply border border-gray-light px-4 py-2;
   }
 
   img {
@@ -68,7 +76,11 @@
   }
 
   blockquote {
-    @apply border-l-4 border-accent pl-5 m-0 text-xl;
+    @apply border-l-4 border-gray-300 pl-6 py-4 my-6 italic text-gray-600;
+  }
+
+  .article-body blockquote > *:last-child {
+    margin-bottom: 0;
   }
 
   hr {
@@ -88,6 +100,7 @@
   .article-body {
     font-size: 16px;
   }
+  
   .article-body h1 {
     font-size: 2.25rem; /* 36px */
     font-weight: 700;
@@ -95,6 +108,7 @@
     margin-bottom: 1.25rem;
     line-height: 1.2;
   }
+  
   .article-body h2 {
     font-size: 1.5rem; /* 24px */
     font-weight: 700;
@@ -102,6 +116,7 @@
     margin-bottom: 1rem;
     line-height: 1.25;
   }
+  
   .article-body h3 {
     font-size: 1.25rem; /* 20px */
     font-weight: 600;
@@ -109,6 +124,7 @@
     margin-bottom: 0.75rem;
     line-height: 1.3;
   }
+  
   .article-body h4 {
     font-size: 1.125rem; /* 18px */
     font-weight: 600;
@@ -116,7 +132,52 @@
     margin-bottom: 0.5rem;
     line-height: 1.35;
   }
-  .article-body pre + pre {
-    margin-top: 2rem;
+  
+  .article-body p {
+    margin-bottom: 1.25rem;
+    line-height: 1.7;
+  }
+  
+  .article-body ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    list-style-type: disc;
+  }
+
+  .article-body ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    list-style-type: decimal;
+  }
+  
+  .article-body li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+  
+  .article-body li > ul,
+  .article-body li > ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .article-body pre {
+    margin: 1.5rem 0;
+  }
+  
+  .article-body code {
+    font-size: 0.9em;
+  }
+  
+  .article-body hr {
+    margin: 2rem 0;
+  }
+  
+  .article-body blockquote {
+    margin: 1.5rem 0;
+  }
+  
+  .article-body table {
+    margin: 1.5rem 0;
   }
 }
