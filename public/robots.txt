@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://tasuku.dev/sitemap-index.xml
+
+# Block specific paths if needed
+# Disallow: /admin/
+# Disallow: /private/

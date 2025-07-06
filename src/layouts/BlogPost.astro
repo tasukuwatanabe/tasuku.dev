@@ -13,14 +13,35 @@ interface Props {
 	updatedDate?: Date;
 	prevPost?: CollectionEntry<'blog'> | null;
 	nextPost?: CollectionEntry<'blog'> | null;
+	noindex?: boolean;
 }
 
-const { title, description, pubDate, updatedDate, prevPost, nextPost } = Astro.props;
+const { title, description, pubDate, updatedDate, prevPost, nextPost, noindex } = Astro.props;
 ---
 
-<html lang="en" class="h-full">
+<html lang="ja" class="h-full">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title} description={description} noindex={noindex} />
+		{pubDate && (
+			<script type="application/ld+json" is:inline set:html={JSON.stringify({
+				"@context": "https://schema.org",
+				"@type": "BlogPosting",
+				"headline": title,
+				"description": description,
+				"author": {
+					"@type": "Person",
+					"name": "Tasuku Watanabe",
+					"url": new URL("/about", Astro.site)
+				},
+				"datePublished": pubDate.toISOString(),
+				"dateModified": (updatedDate || pubDate).toISOString(),
+				"url": new URL(Astro.url.pathname, Astro.site),
+				"publisher": {
+					"@type": "Person",
+					"name": "Tasuku Watanabe"
+				}
+			})}></script>
+		)}
 	</head>
 
 	<body class="min-h-screen flex flex-col">

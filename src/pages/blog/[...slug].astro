@@ -28,6 +28,6 @@ const prevPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentInde
 const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 ---
 
-<BlogPost {...post.data} prevPost={prevPost} nextPost={nextPost}>
+<BlogPost {...post.data} prevPost={prevPost} nextPost={nextPost} noindex={post.data.noindex}>
 	<Content />
 </BlogPost>
