@@ -4,6 +4,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import { getBlogUrl } from '../utils/slug';
 
 interface Props {
 	title: string;
@@ -50,7 +51,7 @@ const { title, description, pubDate, updatedDate, prevPost, nextPost } = Astro.p
 						<div class="article-navigation mt-12 pt-8 border-t border-gray-light">
 							<div class="flex gap-4">
 								{prevPost ? (
-									<a href={`/blog/${prevPost.id}/`} class="w-1/2 p-4 border border-gray-light rounded-lg hover:border-gray-400 transition-colors">
+									<a href={getBlogUrl(prevPost.id)} class="w-1/2 p-4 border border-gray-light rounded-lg hover:border-gray-400 transition-colors">
 										<div class="text-sm text-gray-600 mb-1">← 前の記事</div>
 										<div class="font-medium text-black truncate text-sm">{prevPost.data.title}</div>
 									</a>
@@ -58,7 +59,7 @@ const { title, description, pubDate, updatedDate, prevPost, nextPost } = Astro.p
 									<div class="w-1/2"></div>
 								)}
 								{nextPost ? (
-									<a href={`/blog/${nextPost.id}/`} class="w-1/2 p-4 border border-gray-light rounded-lg hover:border-gray-400 transition-colors text-right">
+									<a href={getBlogUrl(nextPost.id)} class="w-1/2 p-4 border border-gray-light rounded-lg hover:border-gray-400 transition-colors text-right">
 										<div class="text-sm text-gray-600 mb-1">次の記事 →</div>
 										<div class="font-medium text-black truncate text-sm">{nextPost.data.title}</div>
 									</a>

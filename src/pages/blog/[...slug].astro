@@ -2,11 +2,12 @@
 import { type CollectionEntry, getCollection } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { render } from 'astro:content';
+import { getCleanSlug } from '../../utils/slug';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
 	return posts.map((post) => ({
-		params: { slug: post.id },
+		params: { slug: getCleanSlug(post.id) },
 		props: { post, posts },
 	}));
 }
