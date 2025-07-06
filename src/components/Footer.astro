@@ -1,7 +1,8 @@
 ---
+import { SITE_TITLE } from '../consts';
 const today = new Date();
 ---
 
 <footer class="h-12 px-8 text-center text-gray-600 text-xs mt-auto flex items-center justify-center" style="background: #f5f7fa;">
-	&copy; {today.getFullYear()} All rights reserved.
+	&copy; {today.getFullYear()} {SITE_TITLE}. All rights reserved.
 </footer>
