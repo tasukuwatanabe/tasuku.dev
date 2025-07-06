@@ -10,14 +10,9 @@ export default {
       },
       fontFamily: {
         japanese: [
-          "Noto Sans JP",
-          "Hiragino Kaku Gothic ProN",
-          "Hiragino Sans",
-          "Yu Gothic",
-          "Meiryo",
-          "sans-serif",
+          '"Noto Sans JP"',
+          'sans-serif',
         ],
-        mono: ["Noto Sans Mono", "Consolas", "Monaco", "monospace"],
       },
       fontSize: {
         base: "16px",
