@@ -197,4 +197,18 @@
   .nav-title {
     @apply font-medium text-black truncate text-sm;
   }
+
+  /* Aboutページ用スタイル - 詳細度を高くして既存のulスタイルを上書き */
+  .article-body ul.link-list {
+    @apply mb-4;
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .article-body ul.link-list li {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+  }
 }
