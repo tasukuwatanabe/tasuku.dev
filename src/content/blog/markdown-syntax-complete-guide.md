@@ -1,5 +1,5 @@
 ---
-title: "Markdownの記法完全マニュアル"
+title: "Markdownの記法完全マニュアル（ダミー）"
 description: "Markdownの基本的な記法から高度な機能まで、効率的な文書作成のための完全ガイド"
 pubDate: "2024-11-25"
 noindex: true
@@ -34,7 +34,7 @@ Markdown は、プレーンテキストを HTML 文書に変換する軽量マ�
 ```markdown
 これは段落 1 です。
 
-これは段落 2 です。  
+これは段落 2 です。
 この行は改行されます。
 ```
 
