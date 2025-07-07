@@ -1,6 +1,7 @@
 ---
 import FormattedDate from './FormattedDate.astro';
 import GradientThumbnail from './GradientThumbnail.astro';
+import { parseDate } from '../utils/date';
 
 interface Props {
 	title: string;
@@ -13,7 +14,7 @@ interface Props {
 const { title, url, date, thumbnail, external = false } = Astro.props;
 
 // Convert string date to Date object if needed
-const dateObj = typeof date === 'string' ? new Date(date) : date;
+const dateObj = parseDate(date);
 ---
 
 <article class="rounded-lg shadow-sm overflow-hidden transition-shadow duration-200 bg-white hover:shadow-md">

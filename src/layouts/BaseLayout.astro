@@ -1,0 +1,28 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  mainClass?: string;
+}
+
+const { title, description, noindex, mainClass = "max-w-6xl mx-auto px-4 flex-grow" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja" class="h-full">
+  <head>
+    <BaseHead title={title} description={description} noindex={noindex} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class={mainClass}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

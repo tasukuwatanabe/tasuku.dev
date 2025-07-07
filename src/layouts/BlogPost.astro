@@ -72,17 +72,17 @@ const { title, description, pubDate, updatedDate, prevPost, nextPost, noindex } 
 						<div class="article-navigation mt-12 pt-8 border-t border-gray-light">
 							<div class="flex gap-4">
 								{prevPost ? (
-									<a href={getBlogUrl(prevPost.id)} class="w-1/2 p-4 border border-gray-light rounded-lg hover:border-gray-400 transition-colors">
-										<div class="text-sm text-gray-600 mb-1">← 前の記事</div>
-										<div class="font-medium text-black truncate text-sm">{prevPost.data.title}</div>
+									<a href={getBlogUrl(prevPost.id)} class="nav-link">
+										<div class="nav-label">← 前の記事</div>
+										<div class="nav-title">{prevPost.data.title}</div>
 									</a>
 								) : (
 									<div class="w-1/2"></div>
 								)}
 								{nextPost ? (
-									<a href={getBlogUrl(nextPost.id)} class="w-1/2 p-4 border border-gray-light rounded-lg hover:border-gray-400 transition-colors text-right">
-										<div class="text-sm text-gray-600 mb-1">次の記事 →</div>
-										<div class="font-medium text-black truncate text-sm">{nextPost.data.title}</div>
+									<a href={getBlogUrl(nextPost.id)} class="nav-link text-right">
+										<div class="nav-label">次の記事 →</div>
+										<div class="nav-title">{nextPost.data.title}</div>
 									</a>
 								) : (
 									<div class="w-1/2"></div>

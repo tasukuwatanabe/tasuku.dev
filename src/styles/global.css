@@ -180,4 +180,21 @@
   .article-body table {
     margin: 1.5rem 0;
   }
+
+  /* 共通化されたコンポーネントスタイル */
+  .section-title {
+    @apply text-2xl font-bold mb-8 text-gray-800 border-b border-gray-200 pb-4;
+  }
+
+  .nav-link {
+    @apply w-1/2 p-4 border border-gray-light rounded-lg hover:border-gray-400 transition-colors;
+  }
+
+  .nav-label {
+    @apply text-sm text-gray-600 mb-1;
+  }
+
+  .nav-title {
+    @apply font-medium text-black truncate text-sm;
+  }
 }
