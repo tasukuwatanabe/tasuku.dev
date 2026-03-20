@@ -1,33 +1,44 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-import { render } from 'astro:content';
-import { getCleanSlug } from '../../utils/slug';
+import { type CollectionEntry, getCollection } from "astro:content";
+import BlogPost from "../../layouts/BlogPost.astro";
+import { render } from "astro:content";
+import { getCleanSlug } from "../../utils/slug";
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: getCleanSlug(post.id) },
-		props: { post, posts },
-	}));
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: getCleanSlug(post.id) },
+    props: { post, posts },
+  }));
 }
 
 interface Props {
-	post: CollectionEntry<'blog'>;
-	posts: CollectionEntry<'blog'>[];
+  post: CollectionEntry<"blog">;
+  posts: CollectionEntry<"blog">[];
 }
 
 const { post, posts } = Astro.props as Props;
 const { Content } = await render(post);
 
-const sortedPosts = posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sortedPosts = posts.sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 
-const currentIndex = sortedPosts.findIndex((p: CollectionEntry<'blog'>) => p.id === post.id);
+const currentIndex = sortedPosts.findIndex(
+  (p: CollectionEntry<"blog">) => p.id === post.id,
+);
 
-const prevPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
+const prevPost =
+  currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
 const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 ---
 
-<BlogPost {...post.data} prevPost={prevPost} nextPost={nextPost} noindex={post.data.noindex}>
-	<Content />
+<BlogPost
+  {...post.data}
+  prevPost={prevPost}
+  nextPost={nextPost}
+  noindex={post.data.noindex}
+>
+  <Content />
 </BlogPost>

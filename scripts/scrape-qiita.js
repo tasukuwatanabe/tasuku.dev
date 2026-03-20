@@ -23,7 +23,7 @@ async function fetchQiitaArticles() {
   } catch (error) {
     console.error(
       "Error fetching Qiita articles:",
-      error instanceof Error ? error.message : error
+      error instanceof Error ? error.message : error,
     );
     return [];
   }
@@ -48,7 +48,7 @@ async function getOGImageUrl(articleUrl) {
   } catch (error) {
     console.error(
       `Error fetching OG image for ${articleUrl}:`,
-      error instanceof Error ? error.message : error
+      error instanceof Error ? error.message : error,
     );
     return null;
   }
@@ -80,7 +80,7 @@ async function main() {
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
   await fs.writeFile(outputPath, JSON.stringify(mapped, null, 2));
   console.log(
-    `Fetched and saved ${mapped.length} Qiita articles to ${outputPath}`
+    `Fetched and saved ${mapped.length} Qiita articles to ${outputPath}`,
   );
 }
 

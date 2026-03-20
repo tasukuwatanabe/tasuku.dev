@@ -1,12 +1,12 @@
 ---
-import '../styles/global.css';
-import { SITE_TITLE, SITE_IMAGE } from '../consts';
+import "../styles/global.css";
+import { SITE_TITLE, SITE_IMAGE } from "../consts";
 
 interface Props {
-	title: string;
-	description: string;
-	image?: string;
-	noindex?: boolean;
+  title: string;
+  description: string;
+  image?: string;
+  noindex?: boolean;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -20,14 +20,12 @@ const ogImage = new URL(image, Astro.site);
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
-	rel="alternate"
-	type="application/rss+xml"
-	title={SITE_TITLE}
-	href={new URL('rss.xml', Astro.site)}
+  rel="alternate"
+  type="application/rss+xml"
+  title={SITE_TITLE}
+  href={new URL("rss.xml", Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
-
-
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -53,15 +51,19 @@ const ogImage = new URL(image, Astro.site);
 <meta property="twitter:image" content={ogImage} />
 
 <!-- JSON-LD Structured Data -->
-<script type="application/ld+json" is:inline set:html={JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": SITE_TITLE,
-  "description": description,
-  "url": Astro.site,
-  "author": {
-    "@type": "Person",
-    "name": "Tasuku Watanabe",
-    "url": new URL("/about", Astro.site)
-  }
-})}></script>
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_TITLE,
+    description: description,
+    url: Astro.site,
+    author: {
+      "@type": "Person",
+      name: "Tasuku Watanabe",
+      url: new URL("/about", Astro.site),
+    },
+  })}
+/>

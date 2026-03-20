@@ -1,7 +1,7 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 
 interface Props {
   title: string;
@@ -10,7 +10,12 @@ interface Props {
   mainClass?: string;
 }
 
-const { title, description, noindex, mainClass = "max-w-6xl mx-auto px-4 flex-grow" } = Astro.props;
+const {
+  title,
+  description,
+  noindex,
+  mainClass = "max-w-6xl mx-auto px-4 flex-grow",
+} = Astro.props;
 ---
 
 <!doctype html>

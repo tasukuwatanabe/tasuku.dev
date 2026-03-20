@@ -1,98 +1,117 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import { getBlogUrl } from '../utils/slug';
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import { getBlogUrl } from "../utils/slug";
 
 interface Props {
-	title: string;
-	description: string;
-	pubDate?: Date;
-	updatedDate?: Date;
-	prevPost?: CollectionEntry<'blog'> | null;
-	nextPost?: CollectionEntry<'blog'> | null;
-	noindex?: boolean;
+  title: string;
+  description: string;
+  pubDate?: Date;
+  updatedDate?: Date;
+  prevPost?: CollectionEntry<"blog"> | null;
+  nextPost?: CollectionEntry<"blog"> | null;
+  noindex?: boolean;
 }
 
-const { title, description, pubDate, updatedDate, prevPost, nextPost, noindex } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  prevPost,
+  nextPost,
+  noindex,
+} = Astro.props;
 ---
 
 <html lang="ja" class="h-full">
-	<head>
-		<BaseHead title={title} description={description} noindex={noindex} />
-		{pubDate && (
-			<script type="application/ld+json" is:inline set:html={JSON.stringify({
-				"@context": "https://schema.org",
-				"@type": "BlogPosting",
-				"headline": title,
-				"description": description,
-				"author": {
-					"@type": "Person",
-					"name": "Tasuku Watanabe",
-					"url": new URL("/about", Astro.site)
-				},
-				"datePublished": pubDate.toISOString(),
-				"dateModified": (updatedDate || pubDate).toISOString(),
-				"url": new URL(Astro.url.pathname, Astro.site),
-				"publisher": {
-					"@type": "Person",
-					"name": "Tasuku Watanabe"
-				}
-			})}></script>
-		)}
-	</head>
+  <head>
+    <BaseHead title={title} description={description} noindex={noindex} />
+    {
+      pubDate && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: title,
+            description: description,
+            author: {
+              "@type": "Person",
+              name: "Tasuku Watanabe",
+              url: new URL("/about", Astro.site),
+            },
+            datePublished: pubDate.toISOString(),
+            dateModified: (updatedDate || pubDate).toISOString(),
+            url: new URL(Astro.url.pathname, Astro.site),
+            publisher: {
+              "@type": "Person",
+              name: "Tasuku Watanabe",
+            },
+          })}
+        />
+      )
+    }
+  </head>
 
-	<body class="min-h-screen flex flex-col">
-		<Header />
-		<main class="w-full max-w-none m-0 flex-grow">
-			<article>
-				<div class="max-w-main mx-auto p-4 text-gray-dark">
-					<div class="title mb-6 py-4 leading-tight">
-						{pubDate && (
-							<div class="date mb-3 text-gray-600 text-sm">
-								<FormattedDate date={pubDate} />
-								{
-									updatedDate && (
-										<div class="last-updated-on italic">
-											Last updated on <FormattedDate date={updatedDate} />
-										</div>
-									)
-								}
-							</div>
-						)}
-						<h1 class="mb-6 text-3xl font-bold">{title}</h1>
-						<hr />
-					</div>
-					<div class="article-body leading-relaxed">
-						<slot />
-					</div>
-					{(prevPost || nextPost) && (
-						<div class="article-navigation mt-12 pt-8 border-t border-gray-light">
-							<div class="flex gap-4">
-								{prevPost ? (
-									<a href={getBlogUrl(prevPost.id)} class="nav-link">
-										<div class="nav-label">← 前の記事</div>
-										<div class="nav-title">{prevPost.data.title}</div>
-									</a>
-								) : (
-									<div class="w-1/2"></div>
-								)}
-								{nextPost ? (
-									<a href={getBlogUrl(nextPost.id)} class="nav-link text-right">
-										<div class="nav-label">次の記事 →</div>
-										<div class="nav-title">{nextPost.data.title}</div>
-									</a>
-								) : (
-									<div class="w-1/2"></div>
-								)}
-							</div>
-						</div>
-					)}
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="w-full max-w-none m-0 flex-grow">
+      <article>
+        <div class="max-w-main mx-auto p-4 text-gray-dark">
+          <div class="title mb-6 py-4 leading-tight">
+            {
+              pubDate && (
+                <div class="date mb-3 text-gray-600 text-sm">
+                  <FormattedDate date={pubDate} />
+                  {updatedDate && (
+                    <div class="last-updated-on italic">
+                      Last updated on <FormattedDate date={updatedDate} />
+                    </div>
+                  )}
+                </div>
+              )
+            }
+            <h1 class="mb-6 text-3xl font-bold">{title}</h1>
+            <hr />
+          </div>
+          <div class="article-body leading-relaxed">
+            <slot />
+          </div>
+          {
+            (prevPost || nextPost) && (
+              <div class="article-navigation mt-12 pt-8 border-t border-gray-light">
+                <div class="flex gap-4">
+                  {prevPost ? (
+                    <a href={getBlogUrl(prevPost.id)} class="nav-link">
+                      <div class="nav-label">← 前の記事</div>
+                      <div class="nav-title">{prevPost.data.title}</div>
+                    </a>
+                  ) : (
+                    <div class="w-1/2" />
+                  )}
+                  {nextPost ? (
+                    <a
+                      href={getBlogUrl(nextPost.id)}
+                      class="nav-link text-right"
+                    >
+                      <div class="nav-label">次の記事 →</div>
+                      <div class="nav-title">{nextPost.data.title}</div>
+                    </a>
+                  ) : (
+                    <div class="w-1/2" />
+                  )}
+                </div>
+              </div>
+            )
+          }
+        </div>
+      </article>
+    </main>
+    <Footer />
+  </body>
 </html>

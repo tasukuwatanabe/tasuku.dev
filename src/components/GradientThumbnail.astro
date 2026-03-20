@@ -1,19 +1,19 @@
 ---
 interface Props {
-	title: string;
-	class?: string;
+  title: string;
+  class?: string;
 }
 
 const { title, class: className } = Astro.props;
 
 const titleHash = title
-	.toLowerCase()
-	.trim()
-	.split('')
-	.reduce((hash, char) => {
-		const code = char.charCodeAt(0);
-		return ((hash << 5) - hash + code) >>> 0;
-	}, 0);
+  .toLowerCase()
+  .trim()
+  .split("")
+  .reduce((hash, char) => {
+    const code = char.charCodeAt(0);
+    return ((hash << 5) - hash + code) >>> 0;
+  }, 0);
 
 const baseHue = titleHash % 360;
 const hue1 = baseHue;
@@ -22,7 +22,28 @@ const saturation = 40 + (titleHash % 25);
 const lightness1 = 70 + (titleHash % 20);
 const lightness2 = lightness1 - 12;
 
-const icons = ['📝', '💻', '🎨', '🚀', '⚡', '🔧', '📚', '🎯', '💡', '🌟', '🎪', '🎭', '🎨', '🔮', '🎪', '🎯', '💎', '🌙', '⭐', '🎪'];
+const icons = [
+  "📝",
+  "💻",
+  "🎨",
+  "🚀",
+  "⚡",
+  "🔧",
+  "📚",
+  "🎯",
+  "💡",
+  "🌟",
+  "🎪",
+  "🎭",
+  "🎨",
+  "🔮",
+  "🎪",
+  "🎯",
+  "💎",
+  "🌙",
+  "⭐",
+  "🎪",
+];
 
 const iconIndex = titleHash % icons.length;
 const selectedIcon = icons[iconIndex];
@@ -31,8 +52,12 @@ const gradientStyle = `background: linear-gradient(45deg, hsl(${hue1}, ${saturat
 ---
 
 <div
-	class:list={['gradient-thumbnail', 'flex items-center justify-center', className]}
-	style={gradientStyle}
+  class:list={[
+    "gradient-thumbnail",
+    "flex items-center justify-center",
+    className,
+  ]}
+  style={gradientStyle}
 >
-	<span class="text-5xl text-white drop-shadow-sm">{selectedIcon}</span>
+  <span class="text-5xl text-white drop-shadow-sm">{selectedIcon}</span>
 </div>

@@ -60,7 +60,7 @@ for (const filename of files) {
     diff.data,
     width,
     height,
-    { threshold: 0.1, includeAA: false }
+    { threshold: 0.1, includeAA: false },
   );
 
   const totalPixels = width * height;
@@ -74,7 +74,7 @@ for (const filename of files) {
       : "";
   const status = numDiffPixels === 0 ? "✅ PASS" : `❌ DIFF`;
   console.log(
-    `${status}  ${filename.padEnd(35)} diff: ${diffPercent}%  (${numDiffPixels} px)${sizeDiff}`
+    `${status}  ${filename.padEnd(35)} diff: ${diffPercent}%  (${numDiffPixels} px)${sizeDiff}`,
   );
 
   if (numDiffPixels > 0) hasFailure = true;

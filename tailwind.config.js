@@ -9,10 +9,7 @@ export default {
         "gray-light": "rgb(229, 233, 240)",
       },
       fontFamily: {
-        japanese: [
-          '"Noto Sans JP"',
-          'sans-serif',
-        ],
+        japanese: ['"Noto Sans JP"', "sans-serif"],
       },
       fontSize: {
         base: "16px",
