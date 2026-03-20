@@ -2,9 +2,28 @@
 @import "@fontsource/noto-sans-jp/400.css";
 @import "@fontsource/noto-sans-jp/700.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-accent: #2337ff;
+  --color-accent-dark: #000d8a;
+  --color-gray-dark: rgb(34, 41, 57);
+  --color-gray-light: rgb(229, 233, 240);
+  --font-japanese: "Noto Sans JP", sans-serif;
+
+  /* Tailwind v3 と同じ gray 値に固定（v4 の OKLCH デフォルト値を上書き） */
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+}
+
+@utility max-w-main {
+  max-width: 720px;
+}
 
 @layer base {
   body {
@@ -183,7 +202,7 @@
 
   /* 共通化されたコンポーネントスタイル */
   .section-title {
-    @apply text-2xl font-bold mb-8 text-gray-800 border-b border-gray-200 pb-4;
+    @apply text-2xl font-bold mb-8 text-gray-800 border-b border-gray-200 pb-4 leading-8;
   }
 
   .nav-link {
