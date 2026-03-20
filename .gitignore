@@ -26,3 +26,7 @@ pnpm-debug.log*
 
 # serena
 .serena/
+
+# VRT generated artifacts
+vrt/screenshots/after/
+vrt/screenshots/diff/
