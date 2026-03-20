@@ -13,6 +13,7 @@
     "vrt:after": "node vrt/capture.mjs after",
     "vrt:compare": "node vrt/compare.mjs",
     "vrt:update": "cp -r vrt/screenshots/after/. vrt/screenshots/before/",
+    "type-check": "astro check",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
     "format": "prettier --write .",
