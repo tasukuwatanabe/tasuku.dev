@@ -30,6 +30,14 @@ interface ZennArticle {
   ogImage?: string | null;
 }
 
+interface SpeakerDeckSlide {
+  id: string;
+  title: string;
+  url: string;
+  published_at: string;
+  thumbnail: string;
+}
+
 type ArticleItem = {
   type: "blog";
   title: string;
@@ -60,6 +68,10 @@ const qiitaArticles: QiitaArticle[] = qiitaArticlesData;
 // Import Zenn articles from the JSON file
 import zennArticlesData from "../data/zenn-articles.json";
 const zennArticles: ZennArticle[] = zennArticlesData;
+
+// Import SpeakerDeck slides from the JSON file
+import speakerdeckSlidesData from "../data/speakerdeck-slides.json";
+const speakerdeckSlides: SpeakerDeckSlide[] = speakerdeckSlidesData;
 ---
 
 <!doctype html>
@@ -117,6 +129,24 @@ const zennArticles: ZennArticle[] = zennArticlesData;
                 url={article.url}
                 date={article.created_at}
                 thumbnail={article.ogImage}
+                external={true}
+              />
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- SpeakerDeck Section -->
+      <section class="mb-16">
+        <h2 class="section-title">SpeakerDeck</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {
+            speakerdeckSlides.map((slide) => (
+              <ArticleCard
+                title={slide.title}
+                url={slide.url}
+                date={slide.published_at}
+                thumbnail={slide.thumbnail}
                 external={true}
               />
             ))
