@@ -9,6 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "scrape-qiita": "node scripts/scrape-qiita",
+    "scrape-zenn": "node scripts/scrape-zenn",
+    "scrape-all": "node scripts/scrape-qiita && node scripts/scrape-zenn",
     "vrt:before": "node vrt/capture.mjs before",
     "vrt:after": "node vrt/capture.mjs after",
     "vrt:compare": "node vrt/compare.mjs",
