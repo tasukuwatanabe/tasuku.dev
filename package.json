@@ -12,7 +12,11 @@
     "vrt:before": "node vrt/capture.mjs before",
     "vrt:after": "node vrt/capture.mjs after",
     "vrt:compare": "node vrt/compare.mjs",
-    "vrt:update": "cp -r vrt/screenshots/after/. vrt/screenshots/before/"
+    "vrt:update": "cp -r vrt/screenshots/after/. vrt/screenshots/before/",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@fontsource/noto-sans-jp": "^5.2.6",
@@ -26,8 +30,11 @@
     "@tailwindcss/vite": "^4.2.2",
     "axios": "^1.10.0",
     "cheerio": "^1.1.0",
+    "oxlint": "^1.56.0",
     "pixelmatch": "^7.1.0",
     "pngjs": "^7.0.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
     "sharp": "^0.34.2",
     "tailwindcss": "^4.2.2"
   }
