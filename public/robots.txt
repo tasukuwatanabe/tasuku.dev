@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://tasuku.dev/sitemap-index.xml
+Sitemap: https://tasukudev.vercel.app/sitemap-index.xml
 
 # Block specific paths if needed
 # Disallow: /admin/
