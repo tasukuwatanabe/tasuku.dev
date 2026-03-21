@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://tasukudev.vercel.app/",
+  site: "https://tasuku.pages.dev/",
   integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
