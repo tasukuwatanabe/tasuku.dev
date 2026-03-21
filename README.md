@@ -1,68 +1,103 @@
-# Astro Starter Kit: Blog
+# tasuku.dev
 
-```sh
-pnpm create astro@latest -- --template blog
-```
+Tasuku Watanabe の個人サイト。Web 開発、プログラミング、技術的な学びを発信する技術ブログです。
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/blog)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/blog)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
+**サイト URL:** https://tasukudev.vercel.app/
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 技術スタック
 
-![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+- **フレームワーク**: [Astro](https://astro.build/) v6 + TypeScript (strict)
+- **スタイリング**: [Tailwind CSS](https://tailwindcss.com/) v4 (`@theme` による CSS-first 設定)
+- **コンテンツ**: MDX + Astro Content Collections
+- **デプロイ**: [Vercel](https://vercel.com/)
 
-Features:
+## 機能
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown support
+- ブログ記事（MDX）
+- Qiita / Zenn 記事のスクレイピングによる外部コンテンツ集約
+- Speaker Deck スライドの一覧表示
+- RSS フィード・サイトマップ
+- ビジュアルリグレッションテスト (VRT)
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## プロジェクト構成
 
 ```text
-├── public/
+├── public/                   # 静的ファイル (favicon, OG画像など)
+├── scripts/                  # スクレイピングスクリプト
+│   ├── scrape-qiita.js
+│   ├── scrape-zenn.js
+│   └── scrape-speakerdeck.js
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
+│   ├── components/           # Astro コンポーネント
+│   ├── content/blog/         # ブログ記事 (Markdown / MDX)
+│   ├── data/                 # スクレイピング結果 (JSON)
+│   ├── layouts/              # ページレイアウト
+│   ├── pages/                # ルーティング
+│   ├── styles/               # グローバル CSS
+│   ├── types/                # 共有型定義
+│   └── utils/                # ユーティリティ関数
+├── vrt/                      # ビジュアルリグレッションテスト
 ├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+└── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## コマンド
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### 開発・ビルド
 
-The `src/content/` directory contains "collections" of related Markdown documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+| コマンド       | 説明                                |
+| :------------- | :---------------------------------- |
+| `pnpm install` | 依存関係のインストール              |
+| `pnpm dev`     | 開発サーバー起動 (`localhost:4321`) |
+| `pnpm build`   | プロダクションビルド (`./dist/`)    |
+| `pnpm preview` | ビルド結果のローカルプレビュー      |
 
-Any static assets, like images, can be placed in the `public/` directory.
+### コード品質
 
-## 🧞 Commands
+| コマンド            | 説明                          |
+| :------------------ | :---------------------------- |
+| `pnpm type-check`   | TypeScript 型チェック         |
+| `pnpm lint`         | Lint (oxlint)                 |
+| `pnpm lint:fix`     | Lint 自動修正                 |
+| `pnpm format`       | コードフォーマット (Prettier) |
+| `pnpm format:check` | フォーマット確認              |
 
-All commands are run from the root of the project, from a terminal:
+### 外部コンテンツのスクレイピング
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+| コマンド                  | 説明                                  |
+| :------------------------ | :------------------------------------ |
+| `pnpm scrape-qiita`       | Qiita 記事を取得し `src/data/` に保存 |
+| `pnpm scrape-zenn`        | Zenn 記事を取得し `src/data/` に保存  |
+| `pnpm scrape-speakerdeck` | SpeakerDeck スライドを取得し保存      |
+| `pnpm scrape-all`         | 上記すべてを順番に実行                |
 
-## 👀 Want to learn more?
+### ビジュアルリグレッションテスト
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```sh
+pnpm vrt:before    # 変更前のスクリーンショットを撮影
+# ... コードを変更 ...
+pnpm vrt:after     # 変更後のスクリーンショットを撮影
+pnpm vrt:compare   # 差分を比較
+pnpm vrt:update    # before を after で更新（差分確認後）
+```
 
-## Credit
+## 環境変数
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+| 変数名          | 説明                                                   | 必須 |
+| :-------------- | :----------------------------------------------------- | :--- |
+| `QIITA_API_KEY` | Qiita API キー（未設定でも動作するが rate limit あり） | 任意 |
+
+`.env` ファイルを作成して設定してください:
+
+```sh
+QIITA_API_KEY=your_api_key_here
+```
+
+## 開発セットアップ
+
+```sh
+pnpm install
+pnpm dev
+```
+
+コミット前に [lefthook](https://github.com/evilmartians/lefthook) による自動チェックが実行されます（型チェック・Lint・フォーマット確認）。初回セットアップ時は lefthook が自動的にフックを登録します。
