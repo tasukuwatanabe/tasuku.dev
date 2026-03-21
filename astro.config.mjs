@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://tasuku.pages.dev/",
   integrations: [mdx(), sitemap()],
+
   vite: {
     plugins: [tailwindcss()],
   },
