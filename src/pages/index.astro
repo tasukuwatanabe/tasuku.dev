@@ -1,17 +1,17 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import BaseHead from "@/components/BaseHead.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import { getCollection } from "astro:content";
-import ArticleCard from "../components/ArticleCard.astro";
-import { getBlogUrl } from "../utils/slug";
+import ArticleCard from "@/components/ArticleCard.astro";
+import { getBlogUrl } from "@/utils/slug";
 import type {
   QiitaArticle,
   ZennArticle,
   SpeakerDeckSlide,
   ArticleItem,
-} from "../types/articles";
+} from "@/types/articles";
 
 const posts = await getCollection("blog");
 
@@ -28,15 +28,15 @@ const allBlogItems: ArticleItem[] = posts
   .sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
 // Import Qiita articles from the JSON file
-import qiitaArticlesData from "../data/qiita-articles.json";
+import qiitaArticlesData from "@/data/qiita-articles.json";
 const qiitaArticles: QiitaArticle[] = qiitaArticlesData;
 
 // Import Zenn articles from the JSON file
-import zennArticlesData from "../data/zenn-articles.json";
+import zennArticlesData from "@/data/zenn-articles.json";
 const zennArticles: ZennArticle[] = zennArticlesData;
 
 // Import SpeakerDeck slides from the JSON file
-import speakerdeckSlidesData from "../data/speakerdeck-slides.json";
+import speakerdeckSlidesData from "@/data/speakerdeck-slides.json";
 const speakerdeckSlides: SpeakerDeckSlide[] = speakerdeckSlidesData;
 ---
 
