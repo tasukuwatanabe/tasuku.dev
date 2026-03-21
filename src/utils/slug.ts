@@ -4,7 +4,7 @@
  * @returns 拡張子を除いたクリーンなスラッグ
  */
 export function getCleanSlug(id: string): string {
-  return id.replace(/\.md$/, "");
+  return id.replace(/\.(md|mdx)$/, "");
 }
 
 /**
