@@ -4,16 +4,11 @@ import path from "path";
 import * as cheerio from "cheerio";
 
 const QIITA_USER_ID = "tasukuwatanabe";
-const QIITA_API_KEY = process.env.QIITA_API_KEY || "";
 const QIITA_API_URL = `https://qiita.com/api/v2/users/${QIITA_USER_ID}/items`;
 
 async function fetchQiitaArticles() {
   try {
-    const headers = QIITA_API_KEY
-      ? { Authorization: `Bearer ${QIITA_API_KEY}` }
-      : {};
     const response = await axios.get(QIITA_API_URL, {
-      headers,
       params: {
         per_page: 100,
         page: 1,

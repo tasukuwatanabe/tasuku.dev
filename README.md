@@ -81,18 +81,6 @@ pnpm vrt:compare   # 差分を比較
 pnpm vrt:update    # before を after で更新（差分確認後）
 ```
 
-## 環境変数
-
-| 変数名          | 説明                                                   | 必須 |
-| :-------------- | :----------------------------------------------------- | :--- |
-| `QIITA_API_KEY` | Qiita API キー（未設定でも動作するが rate limit あり） | 任意 |
-
-`.env` ファイルを作成して設定してください:
-
-```sh
-QIITA_API_KEY=your_api_key_here
-```
-
 ## 開発セットアップ
 
 ```sh
