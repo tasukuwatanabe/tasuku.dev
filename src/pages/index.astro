@@ -71,13 +71,14 @@ const speakerdeckSlides: SpeakerDeckSlide[] = speakerdeckSlidesData;
         <h2 class="section-title">Zenn</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {
-            zennArticles.map((article) => (
+            zennArticles.map((article, index) => (
               <ArticleCard
                 title={article.title}
                 url={article.url}
                 date={article.published_at}
                 thumbnail={article.ogImage}
                 external={true}
+                priority={index === 0}
               />
             ))
           }

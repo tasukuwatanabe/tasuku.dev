@@ -9,9 +9,17 @@ interface Props {
   date: Date | string;
   thumbnail?: string | null;
   external?: boolean;
+  priority?: boolean;
 }
 
-const { title, url, date, thumbnail, external = false } = Astro.props;
+const {
+  title,
+  url,
+  date,
+  thumbnail,
+  external = false,
+  priority = false,
+} = Astro.props;
 
 // Convert string date to Date object if needed
 const dateObj = parseDate(date);
@@ -35,6 +43,9 @@ const dateObj = parseDate(date);
             width="400"
             height="210"
             class="w-full h-full object-cover"
+            loading={priority ? "eager" : "lazy"}
+            fetchpriority={priority ? "high" : "auto"}
+            decoding={priority ? "sync" : "async"}
             style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; image-rendering: pixelated; backface-visibility: hidden; transform: translateZ(0); border-radius: 0.5rem 0.5rem 0 0;"
           />
         ) : (
