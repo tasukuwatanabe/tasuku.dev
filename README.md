@@ -8,13 +8,13 @@ Tasuku Watanabe の個人サイト。Web 開発、プログラミング、技術
 
 - **フレームワーク**: [Astro](https://astro.build/) v6 + TypeScript (strict)
 - **スタイリング**: [Tailwind CSS](https://tailwindcss.com/) v4 (`@theme` による CSS-first 設定)
-- **コンテンツ**: MDX + Astro Content Collections
+- **コンテンツ**: MDX + Astro Content Layer API
 - **デプロイ**: [Vercel](https://vercel.com/)
 
 ## 機能
 
 - ブログ記事（MDX）
-- Qiita / Zenn 記事のスクレイピングによる外部コンテンツ集約
+- Astro Content Layer API のカスタムローダーによる Qiita / Zenn / SpeakerDeck 外部コンテンツ集約
 - Speaker Deck スライドの一覧表示
 - RSS フィード・サイトマップ
 - ビジュアルリグレッションテスト (VRT)
@@ -23,19 +23,16 @@ Tasuku Watanabe の個人サイト。Web 開発、プログラミング、技術
 
 ```text
 ├── public/                   # 静的ファイル (favicon, OG画像など)
-├── scripts/                  # スクレイピングスクリプト
-│   ├── scrape-qiita.js
-│   ├── scrape-zenn.js
-│   └── scrape-speakerdeck.js
 ├── src/
 │   ├── components/           # Astro コンポーネント
 │   ├── content/blog/         # ブログ記事 (Markdown / MDX)
-│   ├── data/                 # スクレイピング結果 (JSON)
 │   ├── layouts/              # ページレイアウト
+│   ├── loaders/              # Astro Content Layer カスタムローダー
 │   ├── pages/                # ルーティング
 │   ├── styles/               # グローバル CSS
 │   ├── types/                # 共有型定義
-│   └── utils/                # ユーティリティ関数
+│   ├── utils/                # ユーティリティ関数
+│   └── content.config.ts     # コンテンツコレクション定義
 ├── vrt/                      # ビジュアルリグレッションテスト
 ├── astro.config.mjs
 └── package.json
@@ -61,15 +58,6 @@ Tasuku Watanabe の個人サイト。Web 開発、プログラミング、技術
 | `pnpm lint:fix`     | Lint 自動修正                 |
 | `pnpm format`       | コードフォーマット (Prettier) |
 | `pnpm format:check` | フォーマット確認              |
-
-### 外部コンテンツのスクレイピング
-
-| コマンド                  | 説明                                  |
-| :------------------------ | :------------------------------------ |
-| `pnpm scrape-qiita`       | Qiita 記事を取得し `src/data/` に保存 |
-| `pnpm scrape-zenn`        | Zenn 記事を取得し `src/data/` に保存  |
-| `pnpm scrape-speakerdeck` | SpeakerDeck スライドを取得し保存      |
-| `pnpm scrape-all`         | 上記すべてを順番に実行                |
 
 ### ビジュアルリグレッションテスト
 
