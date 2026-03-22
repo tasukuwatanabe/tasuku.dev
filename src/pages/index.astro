@@ -6,12 +6,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import { getCollection } from "astro:content";
 import ArticleCard from "@/components/ArticleCard.astro";
 import { getBlogUrl } from "@/utils/slug";
-import type {
-  QiitaArticle,
-  ZennArticle,
-  SpeakerDeckSlide,
-  ArticleItem,
-} from "@/types/articles";
+import type { ArticleItem } from "@/types/articles";
 
 const posts = await getCollection("blog");
 
@@ -27,17 +22,9 @@ const allBlogItems: ArticleItem[] = posts
   }))
   .sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
-// Import Qiita articles from the JSON file
-import qiitaArticlesData from "@/data/qiita-articles.json";
-const qiitaArticles: QiitaArticle[] = qiitaArticlesData;
-
-// Import Zenn articles from the JSON file
-import zennArticlesData from "@/data/zenn-articles.json";
-const zennArticles: ZennArticle[] = zennArticlesData;
-
-// Import SpeakerDeck slides from the JSON file
-import speakerdeckSlidesData from "@/data/speakerdeck-slides.json";
-const speakerdeckSlides: SpeakerDeckSlide[] = speakerdeckSlidesData;
+const qiitaArticles = await getCollection("qiita");
+const zennArticles = await getCollection("zenn");
+const speakerdeckSlides = await getCollection("speakerdeck");
 ---
 
 <!doctype html>
@@ -71,12 +58,12 @@ const speakerdeckSlides: SpeakerDeckSlide[] = speakerdeckSlidesData;
         <h2 class="section-title">Zenn</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {
-            zennArticles.map((article, index) => (
+            zennArticles.map((entry, index) => (
               <ArticleCard
-                title={article.title}
-                url={article.url}
-                date={article.published_at}
-                thumbnail={article.ogImage}
+                title={entry.data.title}
+                url={entry.data.url}
+                date={entry.data.published_at}
+                thumbnail={entry.data.ogImage}
                 external={true}
                 priority={index === 0}
               />
@@ -90,12 +77,12 @@ const speakerdeckSlides: SpeakerDeckSlide[] = speakerdeckSlidesData;
         <h2 class="section-title">Qiita</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {
-            qiitaArticles.map((article) => (
+            qiitaArticles.map((entry) => (
               <ArticleCard
-                title={article.title}
-                url={article.url}
-                date={article.created_at}
-                thumbnail={article.ogImage}
+                title={entry.data.title}
+                url={entry.data.url}
+                date={entry.data.created_at}
+                thumbnail={entry.data.ogImage}
                 external={true}
               />
             ))
@@ -108,12 +95,12 @@ const speakerdeckSlides: SpeakerDeckSlide[] = speakerdeckSlidesData;
         <h2 class="section-title">SpeakerDeck</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {
-            speakerdeckSlides.map((slide) => (
+            speakerdeckSlides.map((entry) => (
               <ArticleCard
-                title={slide.title}
-                url={slide.url}
-                date={slide.published_at}
-                thumbnail={slide.thumbnail}
+                title={entry.data.title}
+                url={entry.data.url}
+                date={entry.data.published_at}
+                thumbnail={entry.data.thumbnail}
                 external={true}
               />
             ))
